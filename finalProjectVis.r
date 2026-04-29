@@ -18,12 +18,12 @@ df <- vehicles %>%
       grepl("Wagon|Sedan|Passenger Car", VClass , ignore.case = TRUE) ~ "Car",
       grepl("Truck|Pickup", VClass , ignore.case = TRUE) ~ "Truck",
       TRUE ~ "Other"
-    ),
+      ),
     drivetrain = case_when(
       grepl("Auto", trany, ignore.case = TRUE) ~ "Automatic",
       grepl("Manual", trany, ignore.case = TRUE) ~ "Manual",
       TRUE ~ "Other"
-    )
+      )
   ) %>%
   # Keep only the primary classes for the analysis
   filter(vehicle_class %in% c("SUV", "Car", "Truck"), drivetrain %in% c("Automatic", "Manual"))
@@ -73,7 +73,7 @@ df_year <- df %>%
     labels = c("1975-1985", "1986-1995", "1996-2005", "2006-2015", "2016-2025"),
     include.lowest = TRUE,
     right = TRUE
-  ))
+    ))
 
 count_tbl <- df_year %>%
   count(period, vehicle_class) %>%
@@ -89,12 +89,12 @@ plot2 <- ggplot(count_tbl, aes(x = period, y = share, fill = vehicle_class)) +
     x = "Model Year Period",
     y = "Share of Vehicles",
     fill = "Class"
-  ) +
+    ) +
   theme_minimal(base_size = 12) +
   theme(
     panel.grid.minor = element_blank(),
     legend.position = "top"
-  )
+    )
 
 # VISUALIZATION 3: The Efficiency Trade-off
 plot3 <- ggplot(df, aes(x = displ, y = comb08, color = vehicle_class)) +
@@ -124,12 +124,12 @@ plot4 <- ggplot(avg_gasoline, aes(x = year, y = avg_mpg_gas)) +
     subtitle = "Excludes EVs and PHEVs to show internal combustion progress",
     x = "Model Year",
     y = "Average Combined MPG"
-  ) +
+    ) +
   theme_minimal(base_size = 12) +
   theme(
     panel.grid.minor = element_blank(),
     plot.title = element_text(face = "bold")
-  )
+    )
 
 # Display plots
 print(plot1)
